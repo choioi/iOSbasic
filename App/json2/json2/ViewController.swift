@@ -27,37 +27,37 @@ class ViewController: UIViewController {
 
     @IBAction func click(sender: AnyObject) {
         //khai báo url
-        let url = NSURL(string: "http://hidaacademy.com/baitap.json")
+        if let url = NSURL(string: "http://hidaacademy.com/baitap.json"){
         //Lấy nội dung của URL gán cho biến data
-        let data = NSData(contentsOfURL: url!)
+            if let data = NSData(contentsOfURL: url){
         
-        do {
+                do {
         
-        let duyetjason = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            //print(kq)
-            //print(kq.count)
-            
-            //print(kq["ketqua"]!!)
-            //print(kq["ketqua"]!!["product"]!!)
-            // kiểm tra dữ iệu ko bị crash khi ko có dữ liêu
-            if let kqresult = duyetjason["result"] as? Array<Dictionary<String,AnyObject>> {
-                 // kiểm tra product co phai la 1 mang Dictionary không
-                    for i in 0..<kqresult.count{
-                        if let productid = kqresult[i]["categoryId"] as? Int{ // kiểm tra ID của product có phải la INT ko
-                            mangid.append(productid) // add vào mảng
-                        }
+                    let duyetjason = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
+                    //print(kq)
+                    //print(kq.count)
+                    //print(kq["ketqua"]!!)
+                    //print(kq["ketqua"]!!["product"]!!)
+                    // kiểm tra dữ iệu ko bị crash khi ko có dữ liêu
+                        if let kqresult = duyetjason["result"] as? Array<Dictionary<String,AnyObject>> {
+                            // kiểm tra product co phai la 1 mang Dictionary không
+                            for i in 0..<kqresult.count{
+                                if let productid = kqresult[i]["categoryId"] as? Int{ // kiểm tra ID của product có phải la INT ko
+                                    mangid.append(productid) // add vào mảng
+                                }
+                            }
+                        } else { print("no kqresulr")}
+                } catch {
+                        print("loi")
+                        return
                     }
-                }
-            
-        
-        
-        }
-        
-        catch {
-        print("loi")
-            return
-        }
+            } else { print("no data")}
+        } else { print("no url")}
         print(mangid)
+        }
+        
+
+        //print(mangid)
 //        print(mangname)
 //        print(mangprice)
         //TEst PHP
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
 
         
     
-    }
+    
 
 }
 
